@@ -1,6 +1,7 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Position;
 
 public class Rook extends ChessPiece {
 
@@ -14,8 +15,51 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public boolean[][] possibleMoves(){
+    public boolean[][] possibleMoves() {
         boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
-        return mat;    
+
+        Position p = new Position(0, 0);
+
+        // Para cima
+        p.setValues(position.getRow() - 1, position.getColumn());
+        while (getBoard().PositionExist(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setRow(p.getRow() - 1);
+        }
+        if (getBoard().PositionExist(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
+
+        // Esquerda
+        p.setValues(position.getRow(), position.getColumn() - 1);
+        while (getBoard().PositionExist(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setColumn(p.getColumn() - 1);
+        }
+        if (getBoard().PositionExist(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
+
+        // Direita
+        p.setValues(position.getRow(), position.getColumn() + 1);
+        while (getBoard().PositionExist(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setColumn(p.getColumn() + 1);
+        }
+        if (getBoard().PositionExist(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
+
+        // Para baixo
+        p.setValues(position.getRow() + 1, position.getColumn());
+        while (getBoard().PositionExist(p) && !getBoard().thereIsAPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+            p.setRow(p.getRow() + 1);
+        }
+        if (getBoard().PositionExist(p) && isThereOpponentPiece(p)) {
+            mat[p.getRow()][p.getColumn()] = true;
+        }
+
+        return mat;
     }
 }
